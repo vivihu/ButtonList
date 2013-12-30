@@ -23,8 +23,8 @@
 
 @property (nonatomic) CGFloat spacingFromSender;    ///< default 50
 @property (nonatomic) CGFloat btnRadius;            ///< default 50
-@property (nonatomic, strong) NSArray *titles;         ///<
-@property (nonatomic, strong) NSArray *colors;         ///< 二进制数组
+@property (nonatomic, strong) NSArray *titles;      ///<
+@property (nonatomic, strong) NSArray *backgroundColors;      ///< 二进制数组
 
 @property (nonatomic,weak) id<HWWButtonListDelegate> delegate;
 

@@ -38,18 +38,18 @@
     circle.layer.masksToBounds = YES;
     circle.opaque = NO;
     circle.alpha = 0.97;
-    if (!self.colors) {
-        self.colors = @[ @0x3c5a9a,
-                         @0x3083be,
-                         @0xd95433,
-                         @0xbb54b5,
-                         @0xab54b4 ];
+    if (!self.backgroundColors) {
+        self.backgroundColors = @[ @0x3c5a9a,
+                                   @0x3083be,
+                                   @0xd95433,
+                                   @0xbb54b5,
+                                   @0xab54b4 ];
     }
     
 
     _buttons = [[NSMutableArray alloc] initWithCapacity:self.titles.count];
     for (int i = 0; i < self.titles.count; i++) {
-        int color = [self.colors[i] intValue];
+        int color = [self.backgroundColors[i] intValue];
         circle.backgroundColor = UIColorFromRGB(color);
         /* * * * * * * * * *  华 丽 丽 的  * * * * * * * * */
         UILabel *label = [[UILabel alloc] initWithFrame:circle.bounds];
@@ -78,6 +78,9 @@
     }
 }
 
+
+
+//  create button's background image
 - (UIImage *)imageWithView:(UIView *)view
 {
     UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0);
@@ -92,30 +95,9 @@
     return img;
 }
 
-- (void)animationWithButtons:(UIButton *)btn
-{
-    CGFloat pointY = _centerP.y + self.spacingFromSender;
-    CGFloat pointX = (320 / self.titles.count * btn.tag) + (320 / self.titles.count / 2);
 
-    [UIView animateWithDuration:0.2f animations:^{
-        [btn setCenter:CGPointMake(pointX, pointY)];
-        btn.transform = CGAffineTransformMakeScale(1.2, 1.2);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.25f animations:^{
-            btn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.1f animations:^{
-                btn.transform = CGAffineTransformMakeScale(1, 1);
-            }completion:^(BOOL finished) {
-                btn.layer.shadowColor = [UIColor blackColor].CGColor;
-                btn.layer.shadowOpacity = 0.2;
-                btn.layer.shadowOffset = CGSizeMake(0, 1);
-                btn.layer.shadowRadius = 2;
-            }];
-        }];
-    }];
-}
 
+//  button touch event
 - (void)selectedIndexButton:(UIButton *)btn
 {
     [_buttons removeObject:btn];
@@ -137,6 +119,33 @@
     if ([self.delegate respondsToSelector:@selector(didSelectButton:atIndex:)]) {
         [self.delegate didSelectButton:btn atIndex:btn.tag];
     }
+}
+
+
+
+//  the button scale animate
+- (void)animationWithButtons:(UIButton *)btn
+{
+    CGFloat pointY = _centerP.y + self.spacingFromSender;
+    CGFloat pointX = (320 / self.titles.count * btn.tag) + (320 / self.titles.count / 2);
+    
+    [UIView animateWithDuration:0.2f animations:^{
+        [btn setCenter:CGPointMake(pointX, pointY)];
+        btn.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.25f animations:^{
+            btn.transform = CGAffineTransformMakeScale(0.8, 0.8);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.1f animations:^{
+                btn.transform = CGAffineTransformMakeScale(1, 1);
+            }completion:^(BOOL finished) {
+                btn.layer.shadowColor = [UIColor blackColor].CGColor;
+                btn.layer.shadowOpacity = 0.2;
+                btn.layer.shadowOffset = CGSizeMake(0, 1);
+                btn.layer.shadowRadius = 2;
+            }];
+        }];
+    }];
 }
 
 - (void)removeSubButton:(UIButton *)btn
@@ -162,6 +171,9 @@
     btn.center = self.superview.center;
 }
 
+
+
+//  remove view
 - (void)removeAllExceptButton
 {
     [_tapView removeFromSuperview];

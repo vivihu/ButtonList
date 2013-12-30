@@ -41,9 +41,13 @@
                      @"O",
                      @"B",
                      @"E" ];
+    list.backgroundColors = @[ @0x3c5a9a,
+                               @0x3083be,
+                               @0xd95433,
+                               @0xbb54b5 ];
 //    list.spacingFromSender = 60;
 //    list.btnRadius = 50;
-        
+
     list.delegate = self;
     [list show];
 }
@@ -51,7 +55,7 @@
 #pragma mark - HWWButtonListDelegate
 - (void)didSelectButton:(UIButton *)btn atIndex:(NSInteger)index
 {
-    NSLog(@"didSelectButton %d",index);
+    NSLog(@"didSelectButton %d",btn.tag);
 }
 
 @end
