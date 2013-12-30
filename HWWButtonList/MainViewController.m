@@ -37,14 +37,15 @@
 
 - (IBAction)showButtonList:(UIButton *)sender {
     ButtonList *list = [[ButtonList alloc] initWithPoint:sender.center inView:self.view];
-    list.titles = @[ @"K",
-                     @"O",
-                     @"B",
-                     @"E" ];
-    list.backgroundColors = @[ @0x3c5a9a,
-                               @0x3083be,
-                               @0xd95433,
-                               @0xbb54b5 ];
+//    list.count = 4;
+//    list.titles = @[ @"K",
+//                     @"O",
+//                     @"B",
+//                     @"E" ];
+//    list.backgroundColors = @[ @0x3c5a9a,
+//                               @0x3083be,
+//                               @0xd95433,
+//                               @0xbb54b5 ];
 //    list.spacingFromSender = 60;
 //    list.btnRadius = 50;
 

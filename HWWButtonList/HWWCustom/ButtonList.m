@@ -17,8 +17,6 @@
     self = [super initWithFrame:CGRectZero];
     if (self) {
         _centerP = point;
-        self.spacingFromSender = 50;
-        self.btnRadius = 50;
         [inView addSubview:self];
 //  create background view
         _tapView = [[UIView alloc] initWithFrame:inView.bounds];
@@ -38,17 +36,10 @@
     circle.layer.masksToBounds = YES;
     circle.opaque = NO;
     circle.alpha = 0.97;
-    if (!self.backgroundColors) {
-        self.backgroundColors = @[ @0x3c5a9a,
-                                   @0x3083be,
-                                   @0xd95433,
-                                   @0xbb54b5,
-                                   @0xab54b4 ];
-    }
     
 
-    _buttons = [[NSMutableArray alloc] initWithCapacity:self.titles.count];
-    for (int i = 0; i < self.titles.count; i++) {
+    _buttons = [[NSMutableArray alloc] initWithCapacity:self.count];
+    for (int i = 0; i < self.count; i++) {
         int color = [self.backgroundColors[i] intValue];
         circle.backgroundColor = UIColorFromRGB(color);
         /* * * * * * * * * *  华 丽 丽 的  * * * * * * * * */
@@ -127,7 +118,7 @@
 - (void)animationWithButtons:(UIButton *)btn
 {
     CGFloat pointY = _centerP.y + self.spacingFromSender;
-    CGFloat pointX = (320 / self.titles.count * btn.tag) + (320 / self.titles.count / 2);
+    CGFloat pointX = (320 / self.count * btn.tag) + (320 / self.count / 2);
     
     [UIView animateWithDuration:0.2f animations:^{
         [btn setCenter:CGPointMake(pointX, pointY)];
@@ -189,6 +180,47 @@
     [self removeAllExceptButton];
 }
 
+
+#pragma mark - property
+- (NSArray *)backgroundColors
+{
+    if (_backgroundColors)
+        return _backgroundColors;
+    
+    _backgroundColors = @[ @0x3c5a9a,
+                           @0x3083be,
+                           @0xd95433,
+                           @0xbb54b5,
+                           @0xab54b4 ];
+    return _backgroundColors;
+}
+
+- (CGFloat)spacingFromSender
+{
+    if (_spacingFromSender)
+        return _spacingFromSender;
+    
+    _spacingFromSender = 50;
+    return _spacingFromSender;
+}
+
+- (CGFloat)btnRadius
+{
+    if (_btnRadius)
+        return _btnRadius;
+    
+    _btnRadius = 50;
+    return _btnRadius;
+}
+
+- (NSInteger)count
+{
+    if (_count)
+        return _count;
+    
+    _count = 4;
+    return _count;
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

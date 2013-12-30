@@ -23,6 +23,7 @@
 
 @property (nonatomic) CGFloat spacingFromSender;    ///< default 50
 @property (nonatomic) CGFloat btnRadius;            ///< default 50
+@property (nonatomic) NSInteger count;              ///< default 4
 @property (nonatomic, strong) NSArray *titles;      ///<
 @property (nonatomic, strong) NSArray *backgroundColors;      ///< 二进制数组
 
