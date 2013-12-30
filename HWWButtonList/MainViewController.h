@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ButtonList.h"
 
-@interface MainViewController : UIViewController
+@interface MainViewController : UIViewController<HWWButtonListDelegate>
 
 - (IBAction)showButtonList:(UIButton *)sender;
 

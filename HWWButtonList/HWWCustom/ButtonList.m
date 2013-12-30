@@ -8,7 +8,6 @@
 
 #import "ButtonList.h"
 
-#define kCount 4
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)(((rgbValue) & 0xFF0000) >> 16))/255.0 green:((float)(((rgbValue) & 0xFF00) >> 8))/255.0 blue:((float)((rgbValue) & 0xFF))/255.0 alpha:1.0]
 
 @implementation ButtonList
@@ -39,20 +38,23 @@
     circle.layer.masksToBounds = YES;
     circle.opaque = NO;
     circle.alpha = 0.97;
-    NSArray *colors = @[ @0x3c5a9a,
+    if (!self.colors) {
+        self.colors = @[ @0x3c5a9a,
                          @0x3083be,
                          @0xd95433,
-                         @0xbb54b5 ];
+                         @0xbb54b5,
+                         @0xab54b4 ];
+    }
     
 
-    _buttons = [[NSMutableArray alloc] initWithCapacity:kCount];
-    for (int i = 0; i < kCount; i++) {
-        int color = [colors[i] intValue];
+    _buttons = [[NSMutableArray alloc] initWithCapacity:self.titles.count];
+    for (int i = 0; i < self.titles.count; i++) {
+        int color = [self.colors[i] intValue];
         circle.backgroundColor = UIColorFromRGB(color);
         /* * * * * * * * * *  华 丽 丽 的  * * * * * * * * */
         UILabel *label = [[UILabel alloc] initWithFrame:circle.bounds];
         label.backgroundColor = [UIColor clearColor];
-        label.text = [NSString stringWithFormat:@"%d",i + 1];
+        label.text = [NSString stringWithFormat:@"%@",self.titles[i]];
         label.textColor = [UIColor whiteColor];
         label.font = [UIFont systemFontOfSize:30];
         label.textAlignment = NSTextAlignmentCenter;
@@ -93,7 +95,7 @@
 - (void)animationWithButtons:(UIButton *)btn
 {
     CGFloat pointY = _centerP.y + self.spacingFromSender;
-    CGFloat pointX = (320 / kCount * btn.tag) + (320 / kCount / 2);
+    CGFloat pointX = (320 / self.titles.count * btn.tag) + (320 / self.titles.count / 2);
 
     [UIView animateWithDuration:0.2f animations:^{
         [btn setCenter:CGPointMake(pointX, pointY)];
@@ -131,6 +133,10 @@
             }
         }];
     }];
+    
+    if ([self.delegate respondsToSelector:@selector(didSelectButton:atIndex:)]) {
+        [self.delegate didSelectButton:btn atIndex:btn.tag];
+    }
 }
 
 - (void)removeSubButton:(UIButton *)btn

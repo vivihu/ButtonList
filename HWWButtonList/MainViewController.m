@@ -7,7 +7,6 @@
 //
 
 #import "MainViewController.h"
-#import "ButtonList.h"
 
 @interface MainViewController ()
 
@@ -38,9 +37,21 @@
 
 - (IBAction)showButtonList:(UIButton *)sender {
     ButtonList *list = [[ButtonList alloc] initWithPoint:sender.center inView:self.view];
+    list.titles = @[ @"K",
+                     @"O",
+                     @"B",
+                     @"E" ];
 //    list.spacingFromSender = 60;
 //    list.btnRadius = 50;
+        
+    list.delegate = self;
     [list show];
+}
+
+#pragma mark - HWWButtonListDelegate
+- (void)didSelectButton:(UIButton *)btn atIndex:(NSInteger)index
+{
+    NSLog(@"didSelectButton %d",index);
 }
 
 @end
